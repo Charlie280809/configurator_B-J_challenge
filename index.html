@@ -1,11 +1,90 @@
-<!DOCTYPE html>
-<html lang="en">
+<!doctype html>
+<html lang="nl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Ben and Jerry's configurator</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Ben & Jerry's Ice Cream Configurator</title>
+    <link rel="stylesheet" href="/src/style.css" />
 </head>
 <body>
-    
+    <div id="preloader" aria-live="polite" aria-busy="true">
+        <p>Jouw ijssalon wordt geladen...</p>
+    </div>
+
+    <main class="experience">
+        <section class="hero">
+            <img src="./src/assets/Ben_&_Jerry's.svg.webp" alt="Logo">
+            <h1>Stel jouw eigen ijscup of hoorntje samen</h1>
+        </section>
+
+        <section class="workspace">
+            <div class="viewer">
+                <div id="app" aria-label="3D preview van het ijsje"></div>
+            </div>
+
+            <div id="ui" class="panel">
+                <form id="order-form">
+                    <fieldset>
+                        <legend>Jouw bestelling</legend>
+
+                        <label for="nameInput">Naam</label>
+                        <input type="text" id="nameInput" name="name" placeholder="Voer je naam in" maxlength="30" required />
+
+                        <label for="addressInput">Adres</label>
+                        <input type="text" id="addressInput" name="address" placeholder="Voer je adres in" required />
+
+                        <label for="flavorSelect">Smaak</label>
+                        <select id="flavorSelect" name="flavor" required>
+                            <option value="">Kies een smaak</option>
+                            <option value="vanille">Vanille</option>
+                            <option value="chocolate">Chocolate Fudge Brownie</option>
+                            <option value="strawberry">Strawberry Cheesecake</option>
+                            <option value="cookie-dough">Cookie Dough</option>
+                            <option value="caramel">Caramel Swirl</option>
+                        </select>
+
+                        <label for="toppingsSelect">Toppings</label>
+                        <select id="toppingsSelect" name="toppings" multiple size="5">
+                            <option value="choc-chips">Choco chips</option>
+                            <option value="cookie-crumble">Cookie crumble</option>
+                            <option value="marshmallow">Marshmallow</option>
+                            <option value="nuts">Noten</option>
+                            <option value="sprinkles">Sprinkles</option>
+                        </select>
+
+                        <label for="sauceSelect">Saus</label>
+                        <select id="sauceSelect" name="sauce">
+                            <option value="">Geen saus</option>
+                            <option value="chocolate">Chocoladesaus</option>
+                            <option value="caramel">Caramelsaus</option>
+                            <option value="strawberry">Aardbeiensaus</option>
+                            <option value="white-chocolate">Witte chocoladesaus</option>
+                        </select>
+
+                        <label for="containerSelect">Hoorntje of beker</label>
+                        <select id="containerSelect" name="container" required>
+                            <option value="">Kies een optie</option>
+                            <option value="cone">Hoorntje</option>
+                            <option value="cup">Beker</option>
+                        </select>
+                    </fieldset>
+
+                    <section class="price-box" aria-live="polite">
+                        <p>Prijs</p>
+                        <strong id="price">€ 0,00</strong>
+                    </section>
+
+                    <button id="submit-order" type="submit">Plaats bestelling</button>
+                </form>
+
+                <section class="confirmation" aria-live="polite">
+                    <h2>Bevestiging</h2>
+                    <p id="confirmationMessage">Vul je gegevens in en plaats je bestelling om bevestiging te ontvangen.</p>
+                </section>
+            </div>
+        </section>
+    </main>
+
+    <script type="module" src="/src/main.js"></script>
 </body>
 </html>
