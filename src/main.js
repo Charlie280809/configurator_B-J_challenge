@@ -20,16 +20,17 @@ const loadingManager = new THREE.LoadingManager(() => {
 
 // Scene & Camera setup
 const scene = new THREE.Scene();
-scene.background = new THREE.Color(0xf6f0e8);
+scene.background = null;
 
 const camera = new THREE.PerspectiveCamera(75, window.innerWidth / window.innerHeight, 0.1, 1000);
 camera.position.set(0, 2, 8);
 scene.add(camera);
 
 // Renderer setup
-const renderer = new THREE.WebGLRenderer({ antialias: true });
+const renderer = new THREE.WebGLRenderer({ antialias: true, alpha: true });
 renderer.setSize(window.innerWidth, window.innerHeight);
 renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
+renderer.setClearColor(0x000000, 0);
 renderer.shadowMap.enabled = true;
 renderer.shadowMap.type = THREE.PCFSoftShadowMap;
 renderer.outputColorSpace = THREE.SRGBColorSpace;
@@ -71,10 +72,10 @@ scene.add(directionalLight);
 // Load static SVG background
 const gltfLoader = new GLTFLoader(loadingManager);
 const textureLoader = new THREE.TextureLoader(loadingManager);
-textureLoader.load('/environment/background.svg', (texture) => {
-    texture.colorSpace = THREE.SRGBColorSpace;
-    scene.background = texture;
-});
+// textureLoader.load('/environment/background.svg', (texture) => {
+//     texture.colorSpace = THREE.SRGBColorSpace;
+//     scene.background = texture;
+// });
 
 // Load model
 let icecreamModel;
@@ -117,7 +118,6 @@ const addressInput = document.getElementById('addressInput');
 const flavorSelect = document.getElementById('flavorSelect');
 const toppingsSelect = document.getElementById('toppingsSelect');
 const sauceSelect = document.getElementById('sauceSelect');
-const containerSelect = document.getElementById('containerSelect');
 const submitButton = document.getElementById('submit-order');
 const feedback = document.getElementById('confirmationMessage');
 const priceEl = document.getElementById('price');
@@ -130,18 +130,11 @@ const flavorColors = {
     caramel: 0xc9894b,
 };
 
-const containerHeights = {
-    cone: -1.15,
-    cup: -1.0,
-};
-
 function updatePrice() {
     let total = 0;
     const toppingsCount = toppingsSelect ? toppingsSelect.selectedOptions.length : 0;
 
     if (flavorSelect && flavorSelect.value) total += 4.5;
-    if (containerSelect && containerSelect.value === 'cone') total += 0.75;
-    if (containerSelect && containerSelect.value === 'cup') total += 0.5;
     if (sauceSelect && sauceSelect.value) total += 0.5;
     total += toppingsCount * 0.4;
 
@@ -165,24 +158,18 @@ function updateModelAppearance() {
     });
 }
 
-function updateContainer() {
-    if (!icecreamModel || !containerSelect) return;
-    icecreamModel.position.y = containerHeights[containerSelect.value] ?? -1.1;
-}
-
 function updateConfirmation() {
     if (!feedback) return;
 
     const nameValue = nameInput ? nameInput.value.trim() : '';
     const flavorValue = flavorSelect ? flavorSelect.options[flavorSelect.selectedIndex]?.textContent || '' : '';
-    const containerValue = containerSelect ? containerSelect.options[containerSelect.selectedIndex]?.textContent || '' : '';
 
     if (!nameValue || !addressInput?.value.trim()) {
         feedback.textContent = 'Vul je naam en adres in om je bestelling te plaatsen.';
         return;
     }
 
-    feedback.textContent = `${nameValue}, jouw ${flavorValue.toLowerCase()} in een ${containerValue.toLowerCase()} is klaar om besteld te worden.`;
+    feedback.textContent = `${nameValue}, jouw ${flavorValue.toLowerCase()} is klaar om besteld te worden.`;
 }
 
 if (nameInput) {
@@ -207,13 +194,6 @@ if (sauceSelect) {
     sauceSelect.addEventListener('change', updatePrice);
 }
 
-if (containerSelect) {
-    containerSelect.addEventListener('change', () => {
-        updateContainer();
-        updatePrice();
-    });
-}
-
 if (addressInput) {
     addressInput.addEventListener('input', updateConfirmation);
 }
@@ -222,7 +202,7 @@ if (submitButton) {
     submitButton.addEventListener('click', (event) => {
         event.preventDefault();
         updateConfirmation();
-        if (feedback && nameInput?.value.trim() && addressInput?.value.trim() && flavorSelect?.value && containerSelect?.value) {
+        if (feedback && nameInput?.value.trim() && addressInput?.value.trim() && flavorSelect?.value) {
             feedback.textContent = `${nameInput.value.trim()}, je bestelling is ontvangen. We bezorgen naar ${addressInput.value.trim()}.`;
         }
     });
