@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="nl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bestelling - Ben & Jerry's Ice Cream Configurator</title>
+    <link rel="stylesheet" href="/src/style.css" />
+</head>
+
+<body>
+    <main class="experience order-experience">
+        <section class="hero order-hero">
+            <img src="./src/assets/Ben_&_Jerry's.svg.webp" alt="Logo">
+            <div>
+                <h1>Bestellen...</h1>
+            </div>
+        </section>
+
+        <section class="order-layout">
+            <article class="panel summary-card">
+                <h2>Jouw bestelling:</h2>
+
+                <dl class="summary-list">
+                    <div class="summary-item">
+                        <dt>Smaak</dt>
+                        <dd id="summary-flavor">Nog niet gekozen</dd>
+                    </div>
+                    <div class="summary-item">
+                        <dt>Toppings</dt>
+                        <dd id="summary-toppings">Nog niet gekozen</dd>
+                    </div>
+                    <div class="summary-item">
+                        <dt>Saus</dt>
+                        <dd id="summary-sauce">Geen saus</dd>
+                    </div>
+                </dl>
+
+                <a class="secondary-link" href="/index.html">&#8592; Bestelling aanpassen</a>
+            </article>
+
+            <section class="panel order-panel">
+                <form id="checkout-form">
+                    <h2>Jouw gegevens:</h2>
+                    <fieldset>
+                        <label for="checkout-name">Naam</label>
+                        <input type="text" id="checkout-name" name="name" placeholder="Voer je naam in" maxlength="30"
+                            required />
+
+                        <label for="checkout-address">Adres</label>
+                        <input type="text" id="checkout-address" name="address" placeholder="Voer je adres in"
+                            required />
+                    </fieldset>
+
+                    <section class="price-box" aria-live="polite">
+                        <p>Totaalprijs</p>
+                        <strong id="checkout-price">€ 0,00</strong>
+                    </section>
+
+                    <button class="cta-button" type="submit">Bevestig bestelling</button>
+                </form>
+            </section>
+        </section>
+    </main>
+
+    <script>
+        const flavorLabels = {
+            vanille: 'Vanille',
+            chocolate: 'Chocolate Fudge Brownie',
+            strawberry: 'Strawberry Cheesecake',
+            'cookie-dough': 'Cookie Dough',
+        };
+
+        const sauceLabels = {
+            chocolate: 'Chocoladesaus',
+            caramel: 'Caramelsaus',
+            strawberry: 'Aardbeiensaus',
+            'white-chocolate': 'Witte chocoladesaus',
+        };
+
+        const toppingsLabels = {
+            'choc-chips': 'Choco chips',
+            'cookie-crumble': 'Cookie crumble',
+            marshmallow: 'Marshmallow',
+            sprinkles: 'Sprinkles',
+        };
+
+        const params = new URLSearchParams(window.location.search);
+
+        const flavor = params.get('flavor') || '';
+        const toppings = params.getAll('toppings');
+        const sauce = params.get('sauce') || '';
+
+        const flavorEl = document.getElementById('summary-flavor');
+        const toppingsEl = document.getElementById('summary-toppings');
+        const sauceEl = document.getElementById('summary-sauce');
+        const priceEl = document.getElementById('summary-price');
+        const checkoutPriceEl = document.getElementById('checkout-price');
+        const form = document.getElementById('checkout-form');
+        const confirmation = document.getElementById('confirmationMessage');
+
+        function formatPrice(value) {
+            return `€ ${value.toFixed(2).replace('.', ',')}`;
+        }
+
+        function calculatePrice() {
+            let total = 0;
+
+            if (flavor) total += 4.5;
+            if (sauce) total += 0.5;
+            total += toppings.length * 0.4;
+
+            return total;
+        }
+
+        const totalPrice = calculatePrice();
+
+        if (flavorEl) {
+            flavorEl.textContent = flavorLabels[flavor] || 'Nog niet gekozen';
+        }
+
+        if (toppingsEl) {
+            toppingsEl.textContent = toppings.length
+                ? toppings.map((item) => toppingsLabels[item] || item).join(', ')
+                : 'Geen toppings';
+        }
+
+        if (sauceEl) {
+            sauceEl.textContent = sauceLabels[sauce] || 'Geen saus';
+        }
+
+        if (priceEl) {
+            priceEl.textContent = formatPrice(totalPrice);
+        }
+
+        if (checkoutPriceEl) {
+            checkoutPriceEl.textContent = formatPrice(totalPrice);
+        }
+
+        if (form && confirmation) {
+            form.addEventListener('submit', (event) => {
+                event.preventDefault();
+
+                const nameValue = document.getElementById('checkout-name')?.value.trim();
+                const addressValue = document.getElementById('checkout-address')?.value.trim();
+
+                if (!nameValue || !addressValue) {
+                    confirmation.textContent = 'Vul je naam en adres in om je bestelling te bevestigen.';
+                    return;
+                }
+
+                confirmation.textContent = `Bedankt ${nameValue}. Je bestelling voor ${addressValue} is bevestigd en klaar om later naar de database te worden verstuurd.`;
+            });
+        }
+    </script>
+</body>
+
+</html>

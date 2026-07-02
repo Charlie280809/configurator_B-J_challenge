@@ -5,7 +5,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ben & Jerry's Ice Cream Configurator</title>
-    <link rel="stylesheet" href="/src/style.css" />
+    <link rel="stylesheet" href="./src/style.css" />
 </head>
 
 <body>
@@ -34,15 +34,14 @@
                             <option value="chocolate">Chocolate Fudge Brownie</option>
                             <option value="strawberry">Strawberry Cheesecake</option>
                             <option value="cookie-dough">Cookie Dough</option>
-                            <option value="caramel">Caramel Swirl</option>
                         </select>
 
                         <label for="toppingsSelect">Toppings</label>
-                        <select id="toppingsSelect" name="toppings" multiple size="5">
+                        <select id="toppingsSelect" name="toppings">
+                            <option value="">Geen toppings</option>
                             <option value="choc-chips">Choco chips</option>
                             <option value="cookie-crumble">Cookie crumble</option>
                             <option value="marshmallow">Marshmallow</option>
-                            <option value="nuts">Noten</option>
                             <option value="sprinkles">Sprinkles</option>
                         </select>
 
@@ -57,16 +56,15 @@
                     </fieldset>
 
                     <section class="price-box" aria-live="polite">
-                        <p>Prijs</p>
-                        <strong id="price">€ 0,00</strong>
+                        <p>Prijs: </p> <strong id="price">€ 0,00</strong>
                     </section>
                 </form>
+
+                <div class="page-actions">
+                    <button class="cta-button" type="submit" form="order-form">Verder naar bestelling</button>
+                </div>
             </div>
         </section>
-
-        <div class="page-actions">
-            <button class="cta-button" type="submit" form="order-form">Verder naar bestelling</button>
-        </div>
     </main>
 
     <script type="module" src="/src/main.js"></script>
