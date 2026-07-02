@@ -16,7 +16,7 @@
     <main class="experience">
         <section class="hero">
             <img src="./src/assets/Ben_&_Jerry's.svg.webp" alt="Logo">
-            <h1>Stel jouw eigen ijscup of hoorntje samen</h1>
+            <h1>Stel jouw eigen ijscup samen!</h1>
         </section>
 
         <section class="workspace">
@@ -25,17 +25,8 @@
             </div>
 
             <div class="panel">
-                <form id="order-form">
+                <form id="order-form" action="/order.html" method="get">
                     <fieldset>
-                        <legend>Jouw bestelling</legend>
-
-                        <label for="nameInput">Naam</label>
-                        <input type="text" id="nameInput" name="name" placeholder="Voer je naam in" maxlength="30"
-                            required />
-
-                        <label for="addressInput">Adres</label>
-                        <input type="text" id="addressInput" name="address" placeholder="Voer je adres in" required />
-
                         <label for="flavorSelect">Smaak</label>
                         <select id="flavorSelect" name="flavor" required>
                             <option value="">Kies een smaak</option>
@@ -63,30 +54,19 @@
                             <option value="strawberry">Aardbeiensaus</option>
                             <option value="white-chocolate">Witte chocoladesaus</option>
                         </select>
-
-                        <label for="containerSelect">Hoorntje of beker</label>
-                        <select id="containerSelect" name="container" required>
-                            <option value="">Kies een optie</option>
-                            <option value="cone">Hoorntje</option>
-                            <option value="cup">Beker</option>
-                        </select>
                     </fieldset>
 
                     <section class="price-box" aria-live="polite">
                         <p>Prijs</p>
                         <strong id="price">€ 0,00</strong>
                     </section>
-
-                    <button id="submit-order" type="submit">Plaats bestelling</button>
                 </form>
-
-                <section class="confirmation" aria-live="polite">
-                    <h2>Bevestiging</h2>
-                    <p id="confirmationMessage">Vul je gegevens in en plaats je bestelling om bevestiging te ontvangen.
-                    </p>
-                </section>
             </div>
         </section>
+
+        <div class="page-actions">
+            <button class="cta-button" type="submit" form="order-form">Verder naar bestelling</button>
+        </div>
     </main>
 
     <script type="module" src="/src/main.js"></script>
