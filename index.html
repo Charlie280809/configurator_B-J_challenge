@@ -1,14 +1,16 @@
 <!doctype html>
 <html lang="nl">
+
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Ben & Jerry's Ice Cream Configurator</title>
     <link rel="stylesheet" href="/src/style.css" />
 </head>
+
 <body>
     <div id="preloader" aria-live="polite" aria-busy="true">
-        <p>Jouw ijssalon wordt geladen...</p>
+        <p>Bezig met laden...</p>
     </div>
 
     <main class="experience">
@@ -22,13 +24,14 @@
                 <div id="app" aria-label="3D preview van het ijsje"></div>
             </div>
 
-            <div id="ui" class="panel">
+            <div class="panel">
                 <form id="order-form">
                     <fieldset>
                         <legend>Jouw bestelling</legend>
 
                         <label for="nameInput">Naam</label>
-                        <input type="text" id="nameInput" name="name" placeholder="Voer je naam in" maxlength="30" required />
+                        <input type="text" id="nameInput" name="name" placeholder="Voer je naam in" maxlength="30"
+                            required />
 
                         <label for="addressInput">Adres</label>
                         <input type="text" id="addressInput" name="address" placeholder="Voer je adres in" required />
@@ -79,7 +82,8 @@
 
                 <section class="confirmation" aria-live="polite">
                     <h2>Bevestiging</h2>
-                    <p id="confirmationMessage">Vul je gegevens in en plaats je bestelling om bevestiging te ontvangen.</p>
+                    <p id="confirmationMessage">Vul je gegevens in en plaats je bestelling om bevestiging te ontvangen.
+                    </p>
                 </section>
             </div>
         </section>
@@ -87,4 +91,5 @@
 
     <script type="module" src="/src/main.js"></script>
 </body>
+
 </html>
