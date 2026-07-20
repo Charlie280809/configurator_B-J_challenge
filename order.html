@@ -119,10 +119,14 @@
             flavorEl.textContent = flavorLabels[flavor] || 'Nog niet gekozen';
         }
 
+        // if (toppingsEl) {
+        //     toppingsEl.textContent = toppings.length
+        //         ? toppings.map((item) => toppingsLabels[item] || item).join(', ')
+        //         : 'Geen toppings';
+        // }
+
         if (toppingsEl) {
-            toppingsEl.textContent = toppings.length
-                ? toppings.map((item) => toppingsLabels[item] || item).join(', ')
-                : 'Geen toppings';
+            toppingsEl.textContent = toppingsLabels[toppings[0]] || 'Geen toppings';
         }
 
         if (sauceEl) {
