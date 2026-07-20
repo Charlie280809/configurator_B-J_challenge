@@ -123,6 +123,8 @@ gltfLoader.load('/models/icecream.glb', (gltf) => {
 
     icecreamModel = model;
     scene.add(model);
+    updateModelAppearance();
+    updateToppingsAppearance();
 });
 
 function moveCamera(pos) {
@@ -148,9 +150,16 @@ const priceEl = document.getElementById('price');
 
 const flavorColors = {
     vanille: 0xf4e5c3,
-    chocolate: 0x5b3a29,
+    chocolate: 0x755039,
     strawberry: 0xf08aa3,
     'cookie-dough': 0xd8b48a,
+};
+
+const toppingColors = {
+    'choc-chips': 0x5b3a29,
+    'cookie-crumble': 0xc69c6d,
+    marshmallow: 0xf5f0e6,
+    sprinkles: 0xff69b4,
 };
 
 function updatePrice() {
@@ -171,11 +180,30 @@ function updateModelAppearance() {
     if (!icecreamModel || !flavorSelect) return;
 
     const flavor = flavorSelect.value;
-    const color = flavorColors[flavor];
+    const color = flavorColors[flavor] || flavorColors.vanille;
 
     icecreamModel.traverse((child) => {
-        if (!child.isMesh || !child.material || !color) return;
+        if (!child.isMesh || !child.material) return;
         if (child.name && child.name.toLowerCase().includes('ice')) {
+            child.material = child.material.clone();
+            child.material.color = new THREE.Color(color);
+        }
+    });
+}
+
+function updateToppingsAppearance() {
+    if (!icecreamModel || !toppingsSelect) return;
+
+    const topping = toppingsSelect.value;
+    const color = toppingColors[topping];
+    const isVisible = !!topping;
+
+    icecreamModel.traverse((child) => {
+        if (!child.isMesh || !child.name || !child.name.includes('Sprinkle')) return;
+
+        child.visible = isVisible;
+
+        if (isVisible && color) {
             child.material = child.material.clone();
             child.material.color = new THREE.Color(color);
         }
@@ -211,7 +239,10 @@ if (flavorSelect) {
 }
 
 if (toppingsSelect) {
-    toppingsSelect.addEventListener('change', updatePrice);
+    toppingsSelect.addEventListener('change', () => {
+        updateToppingsAppearance();
+        updatePrice();
+    });
 }
 
 if (sauceSelect) {
