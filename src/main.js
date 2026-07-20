@@ -106,7 +106,7 @@ gltfLoader.load('/models/icecream.glb', (gltf) => {
             }
             if(child.name === 'Ice'){
                 child.material = new THREE.MeshStandardMaterial({
-                    color: 0xA3A3A3,
+                    color: 0xf4e5c3,
                     metalness: 0.1,
                     roughness: 0.8,
                 });
