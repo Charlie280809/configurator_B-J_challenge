@@ -87,15 +87,37 @@ const textureLoader = new THREE.TextureLoader(loadingManager);
 
 // Load model
 let icecreamModel;
-gltfLoader.load('/models/Ice Cream.glb', (gltf) => {
+gltfLoader.load('/models/icecream.glb', (gltf) => {
     const model = gltf.scene;
-    model.scale.set(1.55, 1.55, 1.55);
+    model.scale.set(0.6, 0.6, 0.6);
     model.position.set(0, -0.8, 0);
 
     model.traverse((child) => {
         if (child.isMesh) {
             child.castShadow = true;
             child.receiveShadow = true;
+
+            if(child.name === 'Cup'){
+                child.material = new THREE.MeshStandardMaterial({
+                    color: 0xB0D7EF,
+                    metalness: 0.1,
+                    roughness: 0.8,
+                });
+            }
+            if(child.name === 'Ice'){
+                child.material = new THREE.MeshStandardMaterial({
+                    color: 0xA3A3A3,
+                    metalness: 0.1,
+                    roughness: 0.8,
+                });
+            }
+            if(child.name.includes('Sprinkle')){
+                child.material = new THREE.MeshStandardMaterial({
+                    color: 0xff69b4,
+                    metalness: 0.1,
+                    roughness: 0.8,
+                });
+            }
         }
     });
 
