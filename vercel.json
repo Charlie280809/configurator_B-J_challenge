@@ -1,0 +1,6 @@
+{
+    "rewrites": {
+        "source": "/order.html",
+        "destination": "/order.html"
+    }
+}
