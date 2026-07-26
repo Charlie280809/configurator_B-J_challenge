@@ -50,6 +50,9 @@ if (app) {
 // OrbitControls
 const controls = new OrbitControls(camera, renderer.domElement);
 controls.enableDamping = true;
+controls.enableZoom = true;
+controls.minDistance = 1.3;
+controls.maxDistance = 5;
 
 const sizes = {
     width: window.innerWidth,
@@ -80,17 +83,14 @@ scene.add(directionalLight);
 // Load static SVG background
 const gltfLoader = new GLTFLoader(loadingManager);
 const textureLoader = new THREE.TextureLoader(loadingManager);
-// textureLoader.load('/environment/background.svg', (texture) => {
-//     texture.colorSpace = THREE.SRGBColorSpace;
-//     scene.background = texture;
-// });
 
 // Load model
 let icecreamModel;
-gltfLoader.load('/models/icecream.glb', (gltf) => {
+gltfLoader.load('/models/Ice.glb', (gltf) => {
     const model = gltf.scene;
     model.scale.set(0.6, 0.6, 0.6);
-    model.position.set(0, -0.8, 0);
+    model.position.set(0, -0.6, 0);
+    model.rotation.y = Math.PI;
 
     model.traverse((child) => {
         if (child.isMesh) {
@@ -100,22 +100,16 @@ gltfLoader.load('/models/icecream.glb', (gltf) => {
             if(child.name === 'Cup'){
                 child.material = new THREE.MeshStandardMaterial({
                     color: 0xB0D7EF,
-                    metalness: 0.1,
-                    roughness: 0.8,
                 });
             }
             if(child.name === 'Ice'){
                 child.material = new THREE.MeshStandardMaterial({
                     color: 0xf4e5c3,
-                    metalness: 0.1,
-                    roughness: 0.8,
                 });
             }
             if(child.name.includes('Sprinkle')){
                 child.material = new THREE.MeshStandardMaterial({
                     color: 0xff69b4,
-                    metalness: 0.1,
-                    roughness: 0.8,
                 });
             }
         }
