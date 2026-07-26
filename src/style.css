@@ -1,6 +1,6 @@
 @font-face {
     font-family: 'ChunkFive';
-    src: url('./assets/chunkfive.regular.ttf') format('truetype');
+    src: url('./assets/ChunkFive-Regular.ttf') format('truetype');
     font-weight: normal;
     font-style: normal;
 }
@@ -144,8 +144,7 @@ label {
 }
 
 input,
-select,
-button {
+select {
     font: inherit;
 }
 
@@ -175,7 +174,8 @@ button {
     padding: 12px 24px;
     background: #1f1b16;
     color: black;
-    font-weight: 700;
+    font-family: 'ChunkFive', sans-serif;
+    font-weight: 500;
     cursor: pointer;
 }
 
@@ -222,7 +222,7 @@ h2{
     gap: 8px;
     border-radius: 16px;
     background: rgb(255, 255, 255);
-    font-size: 16px;
+    font-size: 18px;
     font-weight: 700;
 }
 
