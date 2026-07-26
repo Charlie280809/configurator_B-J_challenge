@@ -22,16 +22,13 @@ body {
     margin: 0;
     padding: 16px;
     font-family: 'Proxima Nova', sans-serif;
+    font-size: 1.2rem;
     background: #f6f0e8;
     color: #1f1b16;
     background-image: url(../public/environment/background.svg);
     background-repeat: no-repeat;
     background-size: cover;
 }
-
-/* body {
-    min-height: 100vh;
-} */
 
 #preloader {
     position: fixed;
@@ -82,10 +79,10 @@ body {
 }
 
 .panel {
-    background: rgba(255, 255, 255, 0.8);
+    background-color: rgb(225, 245, 255);
     border-radius: 20px;
     flex: 0.5;
-    padding:  16px 20px;
+    padding: 16px 20px;
     display: flex;
     flex-direction: column;
     gap: 16px;
@@ -113,7 +110,7 @@ body {
     min-height: 0;
 }
 
-#app{
+#app {
     border-radius: 20px;
     overflow: hidden;
     flex: 1 1 auto;
@@ -187,7 +184,7 @@ button {
     background: #FFBC0E;
 }
 
-.cta-button:hover{
+.cta-button:hover {
     transition: all 0.2s ease-in-out;
     background: #F1DA50;
 }
@@ -197,13 +194,18 @@ button {
     justify-content: flex-end;
 }
 
+.order-panel {
+    flex: 2;
+}
+
 .summary-card {
     display: flex;
     flex-direction: column;
+    flex: 1;
     gap: 16px;
 }
 
-h2{
+h2 {
     margin: 0;
     font-size: 20px;
 }
@@ -217,17 +219,16 @@ h2{
 .summary-item {
     display: flex;
     flex-direction: row;
-    align-items: center;
+    justify-content: space-between;
     padding: 14px 16px;
     gap: 8px;
     border-radius: 16px;
     background: rgb(255, 255, 255);
-    font-size: 18px;
-    font-weight: 700;
 }
 
-.summary-item dd{
-    margin: 0;
+.summary-item dd {
+    font-weight: 700;
+
 }
 
 .secondary-link {
@@ -256,7 +257,29 @@ h2{
     gap: 20px;
 }
 
-#checkout-form .price-box{
+.field {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.field input {
+    font-size: 16px;
+    font-weight: 500;
+}
+
+.order-form-row {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 16px;
+}
+
+.order-form-row #checkout-number, .order-form-row #checkout-postal {
+    width: 50%;
+}
+
+#checkout-form .price-box {
     font-size: 18px;
     margin: 0;
 }

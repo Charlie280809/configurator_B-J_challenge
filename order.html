@@ -3,6 +3,7 @@
 
 <head>
     <meta charset="UTF-8">
+    <link rel="icon" href="./src/assets/B&J_favicon.svg" type="image/svg+xml">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Bestelling - Ben & Jerry's Ice Cream Configurator</title>
     <link rel="stylesheet" href="/src/style.css" />
@@ -13,7 +14,7 @@
         <section class="hero order-hero">
             <img src="./src/assets/Ben_&_Jerry's.svg.webp" alt="Logo">
             <div>
-                <h1>Bestellen...</h1>
+                <h1>Bestel je ijscup</h1>
             </div>
         </section>
 
@@ -23,18 +24,23 @@
 
                 <dl class="summary-list">
                     <div class="summary-item">
-                        <dt>Smaak: </dt>
+                        <dt>Smaak </dt>
                         <dd id="summary-flavor">Nog niet gekozen</dd>
                     </div>
                     <div class="summary-item">
-                        <dt>Toppings: </dt>
+                        <dt>Toppings </dt>
                         <dd id="summary-toppings">Geen toppings</dd>
                     </div>
                     <div class="summary-item">
-                        <dt>Saus: </dt>
+                        <dt>Saus </dt>
                         <dd id="summary-sauce">Geen saus</dd>
                     </div>
                 </dl>
+
+                <section class="price-box" aria-live="polite">
+                    <p>Totaalprijs:</p>
+                    <strong id="checkout-price">€0,00</strong>
+                </section>
 
                 <a class="secondary-link" href="/index.html">&#8592; Bestelling aanpassen</a>
             </article>
@@ -43,19 +49,46 @@
                 <form id="checkout-form">
                     <h2>Jouw gegevens:</h2>
                     <fieldset>
-                        <label for="checkout-name">Naam</label>
-                        <input type="text" id="checkout-name" name="name" placeholder="Voer je naam in" maxlength="30"
-                            required />
 
-                        <label for="checkout-address">Adres</label>
-                        <input type="text" id="checkout-address" name="address" placeholder="Voer je adres in"
-                            required />
+                        <div class="order-form-row">
+                            <label class="field" for="checkout-name">Naam
+                                <input type="text" id="checkout-name" name="name" placeholder="Familienaam"
+                                    maxlength="30" required />
+                            </label>
+
+                            <label class="field" for="checkout-surname">Voornaam
+                                <input type="text" id="checkout-surname" name="surname" placeholder="Voornaam"
+                                    maxlength="30" required />
+                            </label>
+                        </div>
+
+                        <div class="order-form-row">
+                            <label class="field" for="checkout-street">Straat
+                                <input type="text" id="checkout-street" name="street" placeholder="Straatnaam"
+                                    maxlength="100" required />
+                            </label>
+
+                            <label class="field" for="checkout-number">Huisnummer
+                                <input type="text" id="checkout-number" name="number" placeholder="Nr." maxlength="10"
+                                    required />
+                            </label>
+
+                        </div>
+
+                        <div class="order-form-row">
+                            <label class="field" for="checkout-postal">Postcode
+                                <input type="text" id="checkout-postal" name="postal" placeholder="Postcode"
+                                    maxlength="100" required />
+                            </label>
+
+                            <label class="field" for="checkout-city">Gemeente
+                                <input type="text" id="checkout-city" name="city" placeholder="Gemeentenaam"
+                                    maxlength="100" required />
+                            </label>
+
+                        </div>
+
                     </fieldset>
-
-                    <section class="price-box" aria-live="polite">
-                        <p>Totaalprijs:</p>
-                        <strong id="checkout-price">€0,00</strong>
-                    </section>
 
                     <button class="cta-button" type="submit">Bevestig bestelling</button>
                 </form>
