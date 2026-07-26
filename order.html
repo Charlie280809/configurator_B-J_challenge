@@ -122,8 +122,7 @@
 
         const params = new URLSearchParams(window.location.search);
         const flavor = params.get('flavor') || '';
-        const toppingsRaw = params.get('toppings');
-        const toppings = toppingsRaw ? toppingsRaw.split(',') : [];
+        const toppings = params.get('toppings') || '';
         const sauce = params.get('sauce') || '';
 
         const flavorEl = document.getElementById('summary-flavor');
@@ -138,11 +137,9 @@
 
         function calculatePrice() {
             let total = 0;
-
             if (flavor) total += 4.5;
             if (sauce) total += 0.5;
-            total += toppings.length * 0.4;
-
+            if (toppings) total += 1;
             return total;
         }
 
@@ -152,11 +149,12 @@
             flavorEl.textContent = flavorLabels[flavor] || 'Nog niet gekozen';
         }
 
-        if (toppingsEl) {
-            const selectedToppings = toppings
-                .map((topping) => toppingsLabels[topping] || topping)
-                .join(', ');
-            toppingsEl.textContent = selectedToppings || 'Geen toppings';
+        // if (toppingsEl) {
+        //     toppingsEl.textContent = toppings ? (toppingsLabelstoppings || toppings) : 'Geen toppings';
+        // }
+
+        if(toppingsEl){
+            toppingsEl.textContent = toppingsLabels[toppings] || 'Geen toppings';
         }
 
         if (sauceEl) {
