@@ -1,7 +1,13 @@
-import { defineConfig } from 'vite'
+import { resolve } from "node:path";
+import { defineConfig } from "vite";
 
 export default defineConfig({
-    preview: {
-        allowedHosts: ['ben-and-jerrys-configurator.onrender.com']
+    build: {
+        rollupOptions: {
+            input: {
+                main: resolve(import.meta.dirname, "index.html"),
+                order: resolve(import.meta.dirname, "order.html")
+            }
+        }
     }
-})
+});
