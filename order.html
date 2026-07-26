@@ -91,6 +91,8 @@
                     </fieldset>
 
                     <button class="cta-button" type="submit">Bevestig bestelling</button>
+
+                    <div id="confirmationMessage" class="confirmation-message" aria-live="polite"></div>
                 </form>
             </section>
         </section>
@@ -119,18 +121,16 @@
         };
 
         const params = new URLSearchParams(window.location.search);
-
         const flavor = params.get('flavor') || '';
-        const toppings = params.getAll('toppings');
+        const toppingsRaw = params.get('toppings');
+        const toppings = toppingsRaw ? toppingsRaw : [];
         const sauce = params.get('sauce') || '';
 
         const flavorEl = document.getElementById('summary-flavor');
         const toppingsEl = document.getElementById('summary-toppings');
         const sauceEl = document.getElementById('summary-sauce');
-        const priceEl = document.getElementById('summary-price');
         const checkoutPriceEl = document.getElementById('checkout-price');
         const form = document.getElementById('checkout-form');
-        const confirmation = document.getElementById('confirmationMessage');
 
         function formatPrice(value) {
             return `€ ${value.toFixed(2).replace('.', ',')}`;
@@ -152,41 +152,70 @@
             flavorEl.textContent = flavorLabels[flavor] || 'Nog niet gekozen';
         }
 
-        // if (toppingsEl) {
-        //     toppingsEl.textContent = toppings.length
-        //         ? toppings.map((item) => toppingsLabels[item] || item).join(', ')
-        //         : 'Geen toppings';
-        // }
-
         if (toppingsEl) {
-            toppingsEl.textContent = toppingsLabels[toppings[0]] || 'Geen toppings';
+            const selectedToppings = toppings
+                .map((topping) => toppingsLabels[topping] || topping)
+                .join(', ');
+            toppingsEl.textContent = selectedToppings || 'Geen toppings';
         }
 
         if (sauceEl) {
             sauceEl.textContent = sauceLabels[sauce] || 'Geen saus';
         }
 
-        if (priceEl) {
-            priceEl.textContent = formatPrice(totalPrice);
-        }
-
         if (checkoutPriceEl) {
             checkoutPriceEl.textContent = formatPrice(totalPrice);
         }
 
-        if (form && confirmation) {
-            form.addEventListener('submit', (event) => {
+        if (form) {
+            form.addEventListener('submit', async (event) => {
                 event.preventDefault();
 
                 const nameValue = document.getElementById('checkout-name')?.value.trim();
-                const addressValue = document.getElementById('checkout-address')?.value.trim();
+                const surnameValue = document.getElementById('checkout-surname')?.value.trim();
+                const streetValue = document.getElementById('checkout-street')?.value.trim();
+                const numberValue = document.getElementById('checkout-number')?.value.trim();
+                const postalValue = document.getElementById('checkout-postal')?.value.trim();
+                const cityValue = document.getElementById('checkout-city')?.value.trim();
 
-                if (!nameValue || !addressValue) {
-                    confirmation.textContent = 'Vul je naam en adres in om je bestelling te bevestigen.';
+                if (!nameValue || !surnameValue || !streetValue || !numberValue || !postalValue || !cityValue) {
+                    alert('Vul alle adresgegevens in.');
                     return;
                 }
 
-                confirmation.textContent = `Bedankt ${nameValue}. Je bestelling voor ${addressValue} is bevestigd en klaar om later naar de database te worden verstuurd.`;
+                const orderData = {
+                    customerName: `${surnameValue} ${nameValue}`,
+                    address: {
+                        street: streetValue,
+                        houseNumber: numberValue,
+                        postalCode: postalValue,
+                        city: cityValue
+                    },
+                    smaak: flavor,
+                    toppings: toppings,
+                    saus: sauce,
+                    totalPrice: totalPrice
+                };
+
+                try {
+                    const response = await fetch('https://api-b-j-challenge.onrender.com/api/orders', {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(orderData)
+                    });
+
+                    if (!response.ok) {
+                        const err = await response.json().catch(() => ({}));
+                        throw new Error(err.message || 'Fout bij bestellen');
+                    }
+
+                    const result = await response.json().catch(() => ({}));
+                    alert(`Bestelling geplaatst! Ordernummer: ${result._id || 'n.v.t.'}`);
+                    form.reset();
+                } catch (error) {
+                    console.error('Fout:', error);
+                    alert('Bestelling mislukt: ' + error.message);
+                }
             });
         }
     </script>
