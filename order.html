@@ -123,7 +123,7 @@
         const params = new URLSearchParams(window.location.search);
         const flavor = params.get('flavor') || '';
         const toppingsRaw = params.get('toppings');
-        const toppings = toppingsRaw ? toppingsRaw : [];
+        const toppings = toppingsRaw ? toppingsRaw.split(',') : [];
         const sauce = params.get('sauce') || '';
 
         const flavorEl = document.getElementById('summary-flavor');
