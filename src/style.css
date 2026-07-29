@@ -275,13 +275,58 @@ h2 {
     gap: 16px;
 }
 
-.order-form-row #checkout-number, .order-form-row #checkout-postal {
+.order-form-row #checkout-number,
+.order-form-row #checkout-postal {
     width: 50%;
 }
 
 #checkout-form .price-box {
     font-size: 18px;
     margin: 0;
+}
+
+.confirmation-message {
+    transition: all 0.3s ease-in-out;
+    margin-top: 32px;
+    padding: 20px;
+    width: 40%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    align-self: center;
+    font-family: 'Proxima Nova', sans-serif;
+    border-radius: 12px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+    background-color: rgb(225, 245, 255);
+}
+
+.confirmation-message h3 {
+    font-family: 'ChunkFive', sans-serif;
+    font-size: 24px;
+    font-weight: normal;
+    margin: 0;
+}
+
+.confirmation-message p {
+    margin: 8px 0 0 0;
+    font-size: 16px;
+}
+
+.confirmation-message a {
+    margin-top: 12px;
+    color: #1f1b16;
+    font-size: 18px;
+}
+
+.confirmation-message a:hover {
+    transition: all 0.2s ease-in-out;
+    color: #40B4E5;
+}
+
+.hidden {
+    display: none;
 }
 
 @media (max-width: 1100px) {
