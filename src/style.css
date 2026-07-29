@@ -285,6 +285,10 @@ h2 {
     margin: 0;
 }
 
+#errorMessage{
+    margin: 12px 0 0;
+}
+
 .confirmation-message {
     transition: all 0.3s ease-in-out;
     margin-top: 32px;
