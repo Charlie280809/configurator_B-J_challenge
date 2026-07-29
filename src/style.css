@@ -360,3 +360,22 @@ h2 {
         min-width: 0;
     }
 }
+
+@media (max-width: 600px) {
+    .hero {
+        flex-direction: column;
+        gap: 8px;
+    }
+
+    .hero img {
+        max-width: 150px;
+    }
+
+    .hero h1 {
+        font-size: 24px;
+    }
+
+    .confirmation-message {
+        width: 80%;
+    }
+}
