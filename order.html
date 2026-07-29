@@ -87,15 +87,18 @@
                             </label>
 
                         </div>
-
+                        <div id="errorMessage" aria-live="polite"></div>
                     </fieldset>
 
                     <button class="cta-button" type="submit">Bevestig bestelling</button>
-
-                    <div id="confirmationMessage" class="confirmation-message" aria-live="polite"></div>
                 </form>
             </section>
         </section>
+        <div id="confirmationMessage" class="confirmation-message hidden" aria-live="polite">
+            <h3>Je bestelling is geplaatst!</h3>
+            <p>Je ordernummer is: <span id="orderNumber"></span></p>
+            <a href="./index.html">Nog een bestelling plaatsen</a>
+        </div>
     </main>
 
     <script>
@@ -104,6 +107,8 @@
             chocolate: 'Chocolate Fudge Brownie',
             strawberry: 'Strawberry Cheesecake',
             'cookie-dough': 'Cookie Dough',
+            blueberry: 'Blueberry Burst',
+            passion: 'Passion Fruit'
         };
 
         const sauceLabels = {
@@ -118,6 +123,7 @@
             'cookie-crumble': 'Cookie crumble',
             marshmallow: 'Marshmallow',
             sprinkles: 'Sprinkles',
+            brownie: 'Brownie bits'
         };
 
         const params = new URLSearchParams(window.location.search);
@@ -153,7 +159,7 @@
         //     toppingsEl.textContent = toppings ? (toppingsLabelstoppings || toppings) : 'Geen toppings';
         // }
 
-        if(toppingsEl){
+        if (toppingsEl) {
             toppingsEl.textContent = toppingsLabels[toppings] || 'Geen toppings';
         }
 
@@ -208,11 +214,14 @@
                     }
 
                     const result = await response.json().catch(() => ({}));
-                    alert(`Bestelling geplaatst! Ordernummer: ${result._id || 'n.v.t.'}`);
+                    document.getElementById('confirmationMessage').classList.remove('hidden');
+                    document.getElementById('orderNumber').textContent = result._id || 'Onbekend';
+
                     form.reset();
                 } catch (error) {
                     console.error('Fout:', error);
-                    alert('Bestelling mislukt: ' + error.message);
+                    console.log('Bestelling mislukt:', error);
+                    document.getElementById('errorMessage').textContent = `Er ging iets mis bij het plaatsen van je bestelling. Probeer het later opnieuw.`;
                 }
             });
         }
