@@ -147,13 +147,16 @@ const flavorColors = {
     chocolate: 0x755039,
     strawberry: 0xf08aa3,
     'cookie-dough': 0xd8b48a,
+    blueberry: 0x4f86f7,
+    passion: 0xffd700,
 };
 
 const toppingColors = {
-    'choc-chips': 0x5b3a29,
+    'choc-chips': 0x3b2f2f,
     'cookie-crumble': 0xc69c6d,
     marshmallow: 0xf5f0e6,
     sprinkles: 0xff69b4,
+    brownie: 0x5b3a29,
 };
 
 function updatePrice() {
