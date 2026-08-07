@@ -86,7 +86,7 @@ const textureLoader = new THREE.TextureLoader(loadingManager);
 
 // Load model
 let icecreamModel;
-gltfLoader.load('/models/Ice.glb', (gltf) => {
+gltfLoader.load('/models/Icecream.glb', (gltf) => {
     const model = gltf.scene;
     model.scale.set(0.6, 0.6, 0.6);
     model.position.set(0, -0.6, 0);
@@ -97,17 +97,17 @@ gltfLoader.load('/models/Ice.glb', (gltf) => {
             child.castShadow = true;
             child.receiveShadow = true;
 
-            if(child.name === 'Cup'){
+            if (child.name === 'Cup') {
                 child.material = new THREE.MeshStandardMaterial({
                     color: 0xB0D7EF,
                 });
             }
-            if(child.name === 'Ice'){
+            if (child.name === 'Ice') {
                 child.material = new THREE.MeshStandardMaterial({
                     color: 0xf4e5c3,
                 });
             }
-            if(child.name.includes('Sprinkle')){
+            if (child.name.includes('Sprinkle')) {
                 child.material = new THREE.MeshStandardMaterial({
                     color: 0xff69b4,
                 });
@@ -152,21 +152,19 @@ const flavorColors = {
 };
 
 const toppingColors = {
-    'choc-chips': 0x3b2f2f,
+    'choc-chips': 0x805636,
     'cookie-crumble': 0xc69c6d,
-    marshmallow: 0xf5f0e6,
+    marshmallow: 0xfeebff,
     sprinkles: 0xff69b4,
-    brownie: 0x5b3a29,
+    brownie: 0x6b3b1d,
 };
 
 function updatePrice() {
     let total = 0;
-    // const toppingsCount = toppingsSelect ? toppingsSelect.selectedOptions.length : 0;
 
     if (flavorSelect && flavorSelect.value) total += 4.5;
-    if(toppingsSelect && toppingsSelect.value) total += 1.0;
+    if (toppingsSelect && toppingsSelect.value) total += 1.0;
     if (sauceSelect && sauceSelect.value) total += 0.5;
-    // total += toppingsCount * 0.4;
 
     if (priceEl) {
         priceEl.textContent = `€ ${total.toFixed(2).replace('.', ',')}`;
@@ -192,15 +190,32 @@ function updateToppingsAppearance() {
     if (!icecreamModel || !toppingsSelect) return;
 
     const topping = toppingsSelect.value;
-    const color = toppingColors[topping];
-    const isVisible = !!topping;
+
+    const toppingNameMap = {
+        'choc-chips': 'chocochip',
+        'cookie-crumble': 'cookie',
+        marshmallow: 'marshmellow',
+        sprinkles: 'sprinkle',
+        brownie: 'brownie',
+    };
+
+    const namePart = toppingNameMap[topping] || null;
+    const color = toppingColors[topping] || null;
+    const isVisible = !!namePart;
 
     icecreamModel.traverse((child) => {
-        if (!child.isMesh || !child.name || !child.name.includes('Sprinkle')) return;
+        if (!child.isMesh || !child.name) return;
 
-        child.visible = isVisible;
+        const childName = child.name.toLowerCase();
 
-        if (isVisible && color) {
+        const isToppingMesh = Object.values(toppingNameMap).some(part =>
+            childName.includes(part)
+        );
+
+        if (!isToppingMesh) return;
+        child.visible = isVisible && childName.includes(namePart);
+
+        if (child.visible && color) {
             child.material = child.material.clone();
             child.material.color = new THREE.Color(color);
         }
