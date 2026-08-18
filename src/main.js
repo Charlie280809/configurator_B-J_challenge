@@ -54,12 +54,12 @@ controls.enableZoom = true;
 controls.minDistance = 1.3;
 controls.maxDistance = 5;
 
+// Responsive design
 const sizes = {
     width: window.innerWidth,
     height: window.innerHeight,
 };
 
-// Responsive design
 window.addEventListener('resize', () => {
     sizes.width = app?.clientWidth ?? window.innerWidth;
     sizes.height = app?.clientHeight ?? window.innerHeight;
@@ -79,10 +79,8 @@ directionalLight.position.set(5, 10, 7.5);
 directionalLight.castShadow = true;
 scene.add(directionalLight);
 
-// Load static SVG background
-const gltfLoader = new GLTFLoader(loadingManager);
-
 // Load model
+const gltfLoader = new GLTFLoader(loadingManager);
 let icecreamModel;
 gltfLoader.load('/models/Icecream.glb', (gltf) => {
     const model = gltf.scene;
@@ -119,16 +117,16 @@ gltfLoader.load('/models/Icecream.glb', (gltf) => {
     updateToppingsAppearance();
 });
 
-function moveCamera(pos) {
-    gsap.to(camera.position, {
-        x: pos.x,
-        y: pos.y,
-        z: pos.z,
-        duration: 0.6,
-        ease: 'power2.out',
-        onUpdate: () => controls.update()
-    });
-}
+// function moveCamera(pos) {
+//     gsap.to(camera.position, {
+//         x: pos.x,
+//         y: pos.y,
+//         z: pos.z,
+//         duration: 0.6,
+//         ease: 'power2.out',
+//         onUpdate: () => controls.update()
+//     });
+// }
 
 // Simple UI hooks
 const nameInput = document.getElementById('nameInput');
@@ -234,14 +232,14 @@ function updateConfirmation() {
     feedback.textContent = `${nameValue}, jouw ${flavorValue.toLowerCase()} is klaar om besteld te worden.`;
 }
 
-if (nameInput) {
-    nameInput.addEventListener('focus', () => moveCamera(cameraPos.name));
-    nameInput.addEventListener('blur', () => moveCamera(cameraPos.default));
-}
+// if (nameInput) {
+//     nameInput.addEventListener('focus', () => moveCamera(cameraPos.name));
+//     nameInput.addEventListener('blur', () => moveCamera(cameraPos.default));
+// }
 
 if (flavorSelect) {
-    flavorSelect.addEventListener('focus', () => moveCamera(cameraPos.flavor));
-    flavorSelect.addEventListener('blur', () => moveCamera(cameraPos.default));
+    // flavorSelect.addEventListener('focus', () => moveCamera(cameraPos.flavor));
+    // flavorSelect.addEventListener('blur', () => moveCamera(cameraPos.default));
     flavorSelect.addEventListener('change', () => {
         updateModelAppearance();
         updatePrice();
