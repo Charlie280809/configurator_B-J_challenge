@@ -68,7 +68,6 @@ window.addEventListener('resize', () => {
     if (app) {
         renderer.setSize(app.clientWidth, app.clientHeight);
     }
-    // renderer.setSize(sizes.width, sizes.height);
 });
 
 // Light setup
@@ -82,7 +81,6 @@ scene.add(directionalLight);
 
 // Load static SVG background
 const gltfLoader = new GLTFLoader(loadingManager);
-const textureLoader = new THREE.TextureLoader(loadingManager);
 
 // Load model
 let icecreamModel;
