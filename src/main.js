@@ -98,16 +98,6 @@ gltfLoader.load('/models/Icecream.glb', (gltf) => {
                     color: 0xB0D7EF,
                 });
             }
-            if (child.name === 'Ice') {
-                child.material = new THREE.MeshStandardMaterial({
-                    color: 0xf4e5c3,
-                });
-            }
-            if (child.name.includes('Sprinkle')) {
-                child.material = new THREE.MeshStandardMaterial({
-                    color: 0xff69b4,
-                });
-            }
         }
     });
 
@@ -207,20 +197,6 @@ function updateToppingsAppearance() {
     });
 }
 
-function updateConfirmation() {
-    if (!feedback) return;
-
-    const nameValue = nameInput ? nameInput.value.trim() : '';
-    const flavorValue = flavorSelect ? flavorSelect.options[flavorSelect.selectedIndex]?.textContent || '' : '';
-
-    if (!nameValue || !addressInput?.value.trim()) {
-        feedback.textContent = 'Vul je naam en adres in om je bestelling te plaatsen.';
-        return;
-    }
-
-    feedback.textContent = `${nameValue}, jouw ${flavorValue.toLowerCase()} is klaar om besteld te worden.`;
-}
-
 if (flavorSelect) {
     flavorSelect.addEventListener('change', () => {
         updateModelAppearance();
@@ -237,20 +213,6 @@ if (toppingsSelect) {
 
 if (sauceSelect) {
     sauceSelect.addEventListener('change', updatePrice);
-}
-
-if (addressInput) {
-    addressInput.addEventListener('input', updateConfirmation);
-}
-
-if (submitButton) {
-    submitButton.addEventListener('click', (event) => {
-        event.preventDefault();
-        updateConfirmation();
-        if (feedback && nameInput?.value.trim() && addressInput?.value.trim() && flavorSelect?.value) {
-            feedback.textContent = `${nameInput.value.trim()}, je bestelling is ontvangen. We bezorgen naar ${addressInput.value.trim()}.`;
-        }
-    });
 }
 
 updatePrice();
