@@ -117,17 +117,6 @@ gltfLoader.load('/models/Icecream.glb', (gltf) => {
     updateToppingsAppearance();
 });
 
-// function moveCamera(pos) {
-//     gsap.to(camera.position, {
-//         x: pos.x,
-//         y: pos.y,
-//         z: pos.z,
-//         duration: 0.6,
-//         ease: 'power2.out',
-//         onUpdate: () => controls.update()
-//     });
-// }
-
 // Simple UI hooks
 const nameInput = document.getElementById('nameInput');
 const addressInput = document.getElementById('addressInput');
@@ -232,14 +221,7 @@ function updateConfirmation() {
     feedback.textContent = `${nameValue}, jouw ${flavorValue.toLowerCase()} is klaar om besteld te worden.`;
 }
 
-// if (nameInput) {
-//     nameInput.addEventListener('focus', () => moveCamera(cameraPos.name));
-//     nameInput.addEventListener('blur', () => moveCamera(cameraPos.default));
-// }
-
 if (flavorSelect) {
-    // flavorSelect.addEventListener('focus', () => moveCamera(cameraPos.flavor));
-    // flavorSelect.addEventListener('blur', () => moveCamera(cameraPos.default));
     flavorSelect.addEventListener('change', () => {
         updateModelAppearance();
         updatePrice();
